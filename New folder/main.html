@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitPlaner</title>
+    <!-- External Font and Icon Libraries -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/main.css">
+<link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js">
+<link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js">
+<link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js">
+<meta name="referrer" content="no-referrer">
+<script src="https://kit.fontawesome.com/ad31800fcc.js" crossorigin="anonymous"></script>
+</head>
+<body>    
+    <div class="app-container" role="application">
+        <button class="mobile-menu-toggle" aria-label="Toggle Navigation">
+            <span class="material-icons">menu</span>
+        </button>
+    
+        <div class="sidebar-overlay"></div>
+    
+        <nav class="sidebar" aria-label="Main Navigation">
+            <div class="logo">
+                <h1>
+                    <img src="images/image-removebg-preview (18) (1).png" alt="SportTrack Logo" width="150" height="50">
+                </h1>
+            </div>
+            <ul class="nav-menu" role="menu">
+                <li class="nav-item active" role="menuitem" data-section="dashboard">
+                    <span class="material-icons" aria-hidden="true">dashboard</span>
+                    <span class="nav-text">Dashboard</span>
+                </li>
+                <li class="nav-item" role="menuitem" data-section="add-result">
+                    <span class="material-icons" aria-hidden="true">add_circle</span>
+                    <span class="nav-text">Add Result</span>
+                </li>
+                <li class="nav-item" role="menuitem" data-section="my-results">
+                    <span class="material-icons" aria-hidden="true">list</span>
+                    <span class="nav-text">My Results</span>
+                </li>
+                <li class="nav-item" role="menuitem" data-section="sports">
+                    <span class="material-icons" aria-hidden="true">sports</span>
+                    <span class="nav-text">Sports</span>
+                </li>
+                <li class="nav-item" role="menuitem" data-section="profile">
+                    <span class="material-icons" aria-hidden="true">person</span>
+                    <span class="nav-text">Profile</span>
+                </li>
+                <li class="nav-item logout" role="menuitem">
+                    <span class="material-icons" aria-hidden="true">logout</span>
+                    <span class="nav-text">Logout</span>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main id="main-content" class="main-content" tabindex="-1">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="section active" aria-labelledby="dashboard-title">
+                <h2 id="dashboard-title">Dashboard</h2>
+                <div class="stats-grid">
+                    <div class="stat-card total-results" aria-label="Total Results">
+                        <h3>Total Results</h3>
+                        <p class="stat-number" aria-live="polite">0</p>
+                    </div>
+                    <div class="stat-card recent-sport" aria-label="Most Recent Sport">
+                        <h3>Most Recent Sport</h3>
+                        <p class="stat-text" aria-live="polite">-</p>
+                    </div>
+                    <div class="stat-card best-performance" aria-label="Best Performance">
+                        <h3>Best Performance</h3>
+                        <p class="stat-text" aria-live="polite">-</p>
+                    </div>
+                </div>
+            </section>
+
+         <!-- Add Result Section -->
+<section id="add-result" class="section" aria-labelledby="add-result-title">
+    <h2 id="add-result-title">Add New Result</h2>
+    <form id="result-form" novalidate>
+        <div class="form-group">
+            <label for="sport-select">Sport</label>
+            <select id="sport-select" required aria-describedby="sport-help">
+                <option value="">Loading...</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="date">Date</label>
+            <input type="date" id="date" required aria-describedby="date-help">
+            <small id="date-help" class="form-help">Select the date of your activity</small>
+        </div>
+
+        <div class="form-group">
+            <label for="distance">Distance (km)</label>
+            <input type="number" id="distance" step="0.01" min="0" aria-describedby="distance-help">
+            <small id="distance-help" class="form-help">Total distance traveled (optional)</small>
+        </div>
+
+        <div class="form-group" id="weightlifting-exercise-group" style="display: none;">
+            <label for="weightlifting-exercise-search">Search Exercise</label>
+            <input 
+                type="text" 
+                id="weightlifting-exercise-search" 
+                placeholder="Type to search..." 
+                aria-describedby="weightlifting-exercise-help" 
+            />
+            <ul id="weightlifting-exercise-results" class="dropdown-list">
+                <!-- Filtered results will appear here -->
+            </ul>
+            <small id="weightlifting-exercise-help" class="form-help">Type to search for a specific exercise</small>
+        </div>
+        
+
+        <div class="form-group" id="weightlifting-details-group" style="display: none;">
+            <label for="weightlifting-weight">Weight (kg)</label>
+            <input type="number" id="weightlifting-weight" step="0.5" min="0" aria-describedby="weightlifting-weight-help">
+            <small id="weightlifting-weight-help" class="form-help">Weight of the barbell or dumbbells</small>
+
+            <label for="weightlifting-reps">Repetitions</label>
+            <input type="number" id="weightlifting-reps" min="1" aria-describedby="weightlifting-reps-help">
+            <small id="weightlifting-reps-help" class="form-help">Number of repetitions performed</small>
+
+            <label for="weightlifting-sets">Sets</label>
+            <input type="number" id="weightlifting-sets" min="1" aria-describedby="weightlifting-sets-help">
+            <small id="weightlifting-sets-help" class="form-help">Number of sets performed</small>
+        </div>
+
+        <div class="form-group">
+            <label for="duration">Duration (minutes)</label>
+            <input type="number" id="duration" required min="1" aria-describedby="duration-help">
+            <small id="duration-help" class="form-help">Total time of your activity</small>
+        </div>
+        <div class="form-group">
+            <label for="notes">Notes</label>
+            <textarea id="notes" placeholder="Additional details..." rows="3" aria-describedby="notes-help"></textarea>
+            <small id="notes-help" class="form-help">Optional additional information about your activity</small>
+        </div>
+
+        <button type="submit" class="btn-primary">Save Result</button>
+    </form>
+</section>
+
+            <!-- My Results Section -->
+            <section id="my-results" class="section" aria-labelledby="results-title">
+                <h2 id="results-title">My Results</h2>
+                <div class="filter-section">
+                    <div class="filter-group">
+                        <label for="sport-filter">Filter by Sport</label>
+                        <select id="sport-filter" aria-label="Sport Filter">
+                            <option value="">All Sports</option>
+                            <option value="running">Running</option>
+                            <option value="cycling">Cycling</option>
+                            <option value="swimming">Swimming</option>
+                            <option value="weightlifting">Weightlifting</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="date-filter">Filter by Date</label>
+                        <input type="date" id="date-filter" aria-label="Date Filter">
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table id="results-table" aria-describedby="results-title">
+                        <caption>Detailed List of Your Sports Results</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Sport</th>
+                                <th scope="col">Duration</th>
+                                <th scope="col">Performance</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="results-body">
+                            <!-- Results will be dynamically populated -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Sports Section -->
+            <section id="sports" class="section" aria-labelledby="sports-title">
+                <h2 id="sports-title">Manage Sports</h2>
+                <div class="sports-management">
+                    <form class="add-sport-form" id="add-sport-form">
+                        <div class="form-group">
+                            <label for="new-sport-name">New Sport Name</label>
+                            <input type="text" id="new-sport-name" placeholder="Enter sport name" required>
+                        </div>
+                        <button type="submit" id="add-sport-btn" class="btn-secondary">Add Sport</button>
+                    </form>
+                    <div class="sports-list-container">
+                        <h3>Your Sports</h3>
+                        <ul id="sports-list" aria-live="polite">
+                            <!-- Dynamically populated sport list -->
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+      <!-- Profile Section -->
+<section id="profile" class="section" aria-labelledby="profile-title">
+    <h2 id="profile-title">User Profile</h2>
+    <form id="profile-form" novalidate>
+        <div class="form-group">
+            <label for="username">Name</label>
+            <input type="text" id="username" required minlength="3" maxlength="20" readonly>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" readonly>
+        </div>
+        <div class="form-group">
+            <label for="goal">Fitness Goal</label>
+            <textarea id="goal" placeholder="Your fitness goals..." rows="4" maxlength="500"></textarea>
+        </div>
+        <button type="submit" class="btn-primary">Update Profile</button>
+    </form>
+<br>
+    <div class="form-group">
+        <label for="progress-photos">Progress Photos</label>
+        <input type="file" id="progress-photos" multiple accept="image/*">
+        <div id="photo-gallery" class="gallery"></div>
+    </div>
+    
+    <button type="button" id="save-photos" class="btn-secondary">Save Photos</button>
+
+</section>
+        </main>
+    </div>
+    <!-- Modal for Edit Result -->
+    <div id="edit-result-modal" class="modal" role="dialog" aria-labelledby="edit-result-modal-title">
+        <div class="modal-content">
+            <button class="close-modal" aria-label="Close Modal">&times;</button>
+            <h2 id="edit-result-modal-title">Edit Result</h2>
+            <form id="edit-result-form" novalidate>
+                <!-- Similar to Add Result form, will be populated dynamically -->
+            </form>
+        </div>
+    </div>
+    <script type="module" src="/js/app.js" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarOverlay = document.querySelector('.sidebar-overlay');
+            const navItems = document.querySelectorAll('.nav-item');
+
+            // Toggle sidebar
+            mobileMenuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('open');
+                sidebarOverlay.classList.toggle('open');
+            });
+
+            // Close sidebar when overlay is clicked
+            sidebarOverlay.addEventListener('click', () => {
+                sidebar.classList.remove('open');
+                sidebarOverlay.classList.remove('open');
+            });
+
+            // Close sidebar when a nav item is clicked
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    sidebar.classList.remove('open');
+                    sidebarOverlay.classList.remove('open');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

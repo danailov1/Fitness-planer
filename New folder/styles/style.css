@@ -1,0 +1,610 @@
+
+:root {
+	--pr-color: #fff;
+	--second-color: #0a0a0a;
+	--cubicbz: cubic-bezier(.9, 0, .1, 1);
+	--fz-big: 60px;
+}
+
+* {
+	box-sizing: border-box;
+	font-family: 'Syne', sans-serif;
+	font-weight: 800;
+	margin: 0;
+	padding: 0;
+	font-feature-settings: 'pnum' on, 'lnum' on;
+}
+
+body {
+	background: var(--second-color);
+}
+
+/******************************************/
+section {
+	padding-top: 150px;
+	padding-bottom: 50px;
+}
+
+.wrapp {
+	width: 100%;
+	height: auto;
+	overflow: hidden;
+	z-index: 1;
+}
+
+.content {
+	width: 100%;
+	padding: 0 70px;
+}
+
+.char {
+	display: inline-block;
+}
+
+/* Paralax Effect On GSAP **********************************/
+/* header ********/
+.header {
+	position: relative;
+	display: flex;
+	padding: 0 70px;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100vh;
+}
+
+.header__marq {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+}
+
+.header__marq {
+	width: 100%;
+	height: auto;
+	background: #171717;
+	overflow: hidden;
+}
+
+.header__marq-wrapp {
+	display: flex;
+	width: 100%;
+	height: auto;
+	padding: 8px 70px;
+}
+
+.header__marq-txt {
+	position: relative;
+	flex: 0 0 auto;
+	display: inline-block;
+	padding-right: 55px;
+	margin-right: 15px;
+	text-transform: uppercase;
+	color: var(--pr-color);
+	color: #9e9e9e;
+	font-size: 35px;
+}
+
+.header__marq-star {
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	right: 0;
+}
+
+.header__marq-star img {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+/* Lower the title */
+.title {
+    position: relative;
+    margin: 50px 0 0; /* Adds a top margin to push the title lower */
+    font-size: 85px;
+    text-align: center;
+    color: var(--pr-color);
+    text-transform: uppercase;
+    mix-blend-mode: difference;
+    z-index: 2;
+}
+
+.title_paralax {
+	display: inline-block;
+	will-change: transform;	
+}
+
+/* Adjust spacing between title and button */
+.title .stroke {
+    display: block; /* Ensures the button appears on the next line */
+    margin-bottom: 5px; /* Reduces space below the titlxe */
+}
+
+
+.header__img {
+	position: absolute;
+	width: 45%;
+	height: 100%;
+	top: 0;
+	right: 100px;
+	clip-path: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%);
+	overflow: hidden;
+}
+
+.header__img img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.section-title {
+	position: relative;
+	margin: 0;
+	margin-bottom: 60px;
+	line-height: .8;
+	font-size: 70px;
+	text-align: center;
+	color: var(--pr-color);
+	text-transform: uppercase;
+}
+
+.section-title .stroke {
+	color: transparent;
+	-webkit-text-stroke: 1px var(--pr-color);
+}
+
+.section-title__square {
+	position: absolute;
+	display: inline-block;
+	width: 130px;
+	height: 130px;
+	border: 1px solid #4b4b4b;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: -1;
+}
+
+/* about ********/
+.about .section-title {
+	text-align: left;
+}
+
+.about__wrapp {
+	display: flex;
+	justify-content: space-between;
+}
+
+.about__img,
+.about__txt {
+	width: calc(50% - 35px);
+	height: auto;
+}
+
+.about__txt {
+	padding-right: 70px;
+}
+
+.about__p {
+	line-height: 1.4;
+	font-size: 20px;
+	color: #4b4b4b;
+}
+
+.about__img {
+	height: 100vh;
+	overflow: hidden;
+}
+
+.about__img img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* benefits ********/
+.benefits__list {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 40px;
+	width: 100%;
+	height: auto;
+}
+
+.benefits__item {
+	list-style: none;
+	width: calc(33.33% - 27px);
+}
+
+.benefits__num {
+	display: inline-block;
+	font-size: 60px;
+	color: transparent;
+	-webkit-text-stroke: 1px var(--pr-color);
+}
+
+.benefits__p {
+	font-size: 20px;
+	color: #4b4b4b;
+}
+
+
+/* serv ********/
+.serv__item {
+    position: relative;
+    padding: 50px 0;
+    border-bottom: 2px solid #2f2e2e;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease; /* Add background transition */
+}
+
+.serv__item:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow on hover */
+    background-color: #f0f0f0; /* Highlight on hover */
+}
+
+.serv__item-arrow {
+    position: absolute;
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease; /* Smooth arrow rotation */
+}
+
+.serv__item:hover .serv__item-arrow {
+    transform: translateY(-50%) rotate(180deg); /* Arrow rotates on hover */
+}
+
+.serv__item-arrow img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.serv__item-txt {
+    font-size: 24px; /* Adjusted for readability */
+    color: #333; /* Darker text for better contrast */
+    text-transform: none; /* Removed uppercase to improve readability */
+    line-height: 1.6; /* Better spacing between lines */
+    font-weight: 600; /* Slightly bolder for emphasis */
+    max-width: 80%; /* Avoid overly wide text */
+    margin-right: 75px; /* Ensure proper space for the arrow */
+    transition: color 0.3s ease; /* Smooth text color transition */
+}
+
+/* Optional: Add a special hover effect for better contrast */
+.serv__item:hover .serv__item-txt {
+    color: #1a1a1a; /* Darker text color for a stronger focus */
+}
+
+
+/* footer ********/
+.footer {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center content horizontally */
+    justify-content: center; /* Center content vertically */
+    height: 100vh; /* Full viewport height */
+    text-align: center; /* Center text */
+}
+
+.footer__div {
+    font-size: 70px; /* Large font size for the text */
+    letter-spacing: 15px; /* Space out letters */
+    color: var(--pr-color); /* Primary color for text */
+    text-transform: uppercase; /* Uppercase text */
+    margin-bottom: 20px; /* Space between text and link */
+}
+
+.footer__div span {
+    display: inline-block;
+    transition: transform 0.3s ease; /* Smooth animation for the letters */
+}
+
+.signup-link {
+    font-size: 24px; /* Smaller font size for the link */
+    color: var(--pr-color); /* Link color to match primary color */
+    font-weight: bold; /* Make the link bold */
+    text-decoration: none; /* Remove underline from the link */
+    display: inline-block;
+    margin-top: 20px; /* Space between the text and link */
+    transition: color 0.3s ease; /* Smooth color transition on hover */
+}
+
+.signup-link:hover {
+    color: rgb(43, 82, 187) ; /* Change color on hover */
+    text-decoration: underline; /* Underline the link on hover */
+}
+
+
+/* Responsive Base Styles */
+:root {
+    --mobile-padding: clamp(15px, 5vw, 70px);
+}
+
+/* Fluid Typography */
+html {
+    font-size: clamp(16px, 1vw + 1rem, 24px);
+}
+
+/* Responsive Container */
+.content {
+    width: 100%;
+    padding-left: var(--mobile-padding);
+    padding-right: var(--mobile-padding);
+    margin: 0 auto;
+    max-width: 1440px;
+}
+
+/* Flexible Responsive Breakpoints */
+@media screen and (max-width: 1440px) {
+    .header__img {
+        right: 50px;
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .title {
+        font-size: clamp(50px, 10vw, 85px);
+    }
+
+    .section-title {
+        font-size: clamp(45px, 8vw, 70px);
+    }
+}
+
+@media screen and (max-width: 992px) {
+    /* About Section Responsive */
+    .about__wrapp {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .about__img,
+    .about__txt {
+        width: 100%;
+    }
+
+    .about__img {
+        height: 50vh;
+    }
+
+    .about__txt {
+        padding-right: 0;
+    }
+
+    /* Benefits Responsive Grid */
+    .benefits__list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+    }
+
+    .benefits__item {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Services Responsive */
+    .serv__item {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .serv__item-txt {
+        max-width: 100%;
+        margin-right: 0;
+    }
+
+    .serv__item-arrow {
+        align-self: flex-end;
+        margin-top: 15px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    /* Header Responsive */
+    .header {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .header__img {
+        position: relative;
+        width: 100%;
+        height: 50vh;
+        right: 0;
+        margin-top: 30px;
+    }
+
+    .header__marq-wrapp {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .header__marq-txt {
+        font-size: clamp(20px, 4vw, 35px);
+    }
+
+    /* Footer Responsive */
+    .footer__div {
+        font-size: clamp(30px, 8vw, 70px);
+        letter-spacing: clamp(3px, 2vw, 15px);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    /* Typography and Layout Adjustments */
+    .title,
+    .section-title {
+        font-size: clamp(30px, 8vw, 50px);
+    }
+
+    .about__p,
+    .benefits__p,
+    .serv__item-txt {
+        font-size: clamp(16px, 4vw, 20px);
+    }
+
+    .benefits__num {
+        font-size: clamp(30px, 10vw, 60px);
+    }
+}
+
+/* Responsive Utility Classes */
+.responsive-img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* Flexbox and Grid Improvements */
+.flex-responsive {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.grid-responsive {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+/* Touch and Accessibility Improvements */
+@media (hover: none) and (pointer: coarse) {
+    /* Increase tap target sizes for touch devices */
+    .serv__item-arrow,
+    .signup-link {
+        min-height: 44px;
+        min-width: 44px;
+    }
+}
+
+/* Print Styles */
+@media print {
+    body {
+        background: white;
+        color: black;
+    }
+
+    .header__img {
+        display: none;
+    }
+}
+
+
+/* Prevent Word Splitting and Improve Text Wrapping */
+.title,
+.footer__div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3em;
+    white-space: nowrap;
+    overflow-wrap: normal;
+    word-break: keep-all;
+}
+
+.title span,
+.footer__div span {
+    display: inline-block;
+    margin: 0 0.1em;
+}
+
+/* Responsive Text Handling */
+@media screen and (max-width: 768px) {
+    .title,
+    .footer__div {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.2em;
+    }
+
+    .title span,
+    .footer__div span {
+        margin: 0 0.05em;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .title,
+    .footer__div {
+        gap: 0.1em;
+    }
+
+    .title span,
+    .footer__div span {
+        margin: 0;
+    }
+}
+
+/* Signup Link Specific Styling */
+.title .signup-link {
+    white-space: nowrap;
+    display: inline-block;
+}
+
+/* Ensure Consistent Letter Spacing */
+.footer__div span {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+
+.title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.title_paralax {
+    display: block;
+    margin-bottom: 0.2em;
+}
+
+.title .stroke {
+    display: block;
+    margin-top: 0.2em;
+}
+
+.signup-link {
+    display: inline-block;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 768px) {
+    .title {
+        font-size: clamp(40px, 10vw, 70px);
+    }
+
+    .signup-link {
+        font-size: clamp(18px, 4vw, 24px);
+        margin-top: 5px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .title {
+        font-size: clamp(30px, 8vw, 50px);
+    }
+
+    .signup-link {
+        font-size: clamp(16px, 3vw, 20px);
+    }
+}

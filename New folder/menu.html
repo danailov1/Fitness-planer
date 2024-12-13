@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SportTrack Navigation</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        /* Include all the CSS variables and base styles from the original document */
+        :root {
+            --primary-color: #4a90e2;
+            --primary-color-light: #6ab0f3;
+            --primary-color-dark: #3a7bd5;
+            --background-lightest: #f5f8fa;
+            --background-light: #f0f4f8;
+            --border-color-lightest: #e5e7eb;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --border-radius-md: 10px;
+            --transition-medium: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --text-color-dark: #374151;
+        }
+
+        /* Existing reset and base styles can remain the same */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        /* Mobile Menu Toggle Button */
+        .mobile-menu-toggle {
+            display: none;
+            position: fixed;
+            top: var(--spacing-md);
+            left: var(--spacing-md);
+            z-index: 1100;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: var(--spacing-sm);
+            border-radius: var(--border-radius-md);
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .mobile-menu-toggle .material-icons {
+            font-size: 24px;
+        }
+
+        /* Overlay for Mobile Menu */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        @media screen and (max-width: 1024px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: -280px;
+                width: 280px;
+                height: 100vh;
+                z-index: 1050;
+                transition: left var(--transition-medium);
+                background-color: white;
+                box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+            }
+
+            .sidebar.open {
+                left: 0;
+            }
+
+            .sidebar-overlay.open {
+                display: block;
+            }
+
+            .nav-menu {
+                margin-top: var(--spacing-xl);
+            }
+
+            .nav-item {
+                width: 100%;
+                justify-content: center;
+                text-align: center;
+            }
+
+            .nav-item .material-icons {
+                margin-right: 0;
+                margin-bottom: var(--spacing-sm);
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .sidebar {
+                width: 100%;
+                left: -100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="mobile-menu-toggle" aria-label="Toggle Navigation">
+        <span class="material-icons">menu</span>
+    </button>
+
+    <div class="sidebar-overlay"></div>
+
+    <nav class="sidebar" aria-label="Main Navigation">
+        <div class="logo">
+            <h1>
+                <img src="images/image-removebg-preview (18) (1).png" alt="SportTrack Logo" width="150" height="50">
+            </h1>
+        </div>
+        <ul class="nav-menu" role="menu">
+            <li class="nav-item active" role="menuitem" data-section="dashboard">
+                <span class="material-icons" aria-hidden="true">dashboard</span>
+                <span class="nav-text">Dashboard</span>
+            </li>
+            <li class="nav-item" role="menuitem" data-section="add-result">
+                <span class="material-icons" aria-hidden="true">add_circle</span>
+                <span class="nav-text">Add Result</span>
+            </li>
+            <li class="nav-item" role="menuitem" data-section="my-results">
+                <span class="material-icons" aria-hidden="true">list</span>
+                <span class="nav-text">My Results</span>
+            </li>
+            <li class="nav-item" role="menuitem" data-section="sports">
+                <span class="material-icons" aria-hidden="true">sports</span>
+                <span class="nav-text">Sports</span>
+            </li>
+            <li class="nav-item" role="menuitem" data-section="profile">
+                <span class="material-icons" aria-hidden="true">person</span>
+                <span class="nav-text">Profile</span>
+            </li>
+            <li class="nav-item logout" role="menuitem">
+                <span class="material-icons" aria-hidden="true">logout</span>
+                <span class="nav-text">Logout</span>
+            </li>
+        </ul>
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarOverlay = document.querySelector('.sidebar-overlay');
+            const navItems = document.querySelectorAll('.nav-item');
+
+            // Toggle sidebar
+            mobileMenuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('open');
+                sidebarOverlay.classList.toggle('open');
+            });
+
+            // Close sidebar when overlay is clicked
+            sidebarOverlay.addEventListener('click', () => {
+                sidebar.classList.remove('open');
+                sidebarOverlay.classList.remove('open');
+            });
+
+            // Close sidebar when a nav item is clicked
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    sidebar.classList.remove('open');
+                    sidebarOverlay.classList.remove('open');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
